@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  oportunidades:
+    tty: true
+    build: ./src/laravel
+    image: laravel-oportunidades:latest
+    container_name: oportunidades
+    volumes:
+      - ./project:/app
+      # - /etc/pki/tls/certs:/etc/apache2/certs
+      # - /etc/pki/tls/private:/etc/apache2/private
+    ports:
+      - "8084:80"
+      - "8085:443"
+    restart: always
+    networks: 
+      - rede_docker
+    depends_on:
+      - database
+  database:
+    image: mysql:5.7
+    container_name: mysql57
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=homestead
+    networks: 
+      - rede_docker
+    volumes: 
+      - database
+networks:
+  rede_docker:
+volumes: 
+  database:
