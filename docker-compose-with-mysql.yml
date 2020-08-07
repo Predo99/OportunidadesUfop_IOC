@@ -17,7 +17,25 @@ services:
     networks: 
       default:
         ipv4_address: 172.19.0.5
+    depends_on:
+      - database
+  database:
+    image: mysql:5.7
+    container_name: mysql57
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=homestead
+    networks: 
+      default:
+        ipv4_address: 172.19.0.6
+    volumes: 
+      - database
 networks:
   default:
     external:
       name: laravel
+volumes: 
+  database:
