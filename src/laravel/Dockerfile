@@ -22,6 +22,9 @@ RUN a2enmod ssl && a2ensite default-ssl && a2enmod rewrite
 COPY ./apache2/default-ssl.conf /etc/apache2/sites-enabled
 COPY ./apache2/apache2.conf /etc/apache2/
 
+# Criar pastas para salvas arquivo SSL/TLS
+RUN mkdir /etc/apache2/private && mkdir /etc/apache2/certs
+
 # Instalando extensoes do php
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install ctype
