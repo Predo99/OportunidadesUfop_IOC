@@ -12,6 +12,9 @@ da mesma de forma automatizada.
 
 # Como subir o container para rodar a aplicação do laravel ?
 
+## Atenção:
+O arquivo <b>docker-compose.yml</b> é o arquivo de configuração de produção, nele, nem vem por padrão a configuração de um banco de dados, só vem a configuração da aplicação PHP mesmo. Para realizar testes locais siga os passos abaixo, porém, em ver de rodar o arquivo <b>docker-compose.yml</b>, rode o arquivo <b>docker-compose-with-mysql.yml</b>, que já vem inclusive com as configurações de banco de dados para facilitar os testes.
+
 ## Configurações principais
 
 1. É preciso existir uma pasta no caminho <strong>/home/oportuni/public_html</strong>, onde todo o projeto <strong>laravel</strong> precisa estar dentro.
@@ -29,8 +32,28 @@ da mesma de forma automatizada.
 
 # Arquitetura do container.
 
+<p align="justify">
 Foi utilizada a imagem oficial do PHP que é a [*php:7.2-apache*](https://hub.docker.com/_/php), como base, para criar a imagem do *laravel-oportunidades*. O container recebe conexões nas portas 80 e 443, sendo que na 443 ele recebe conexões via HTTPS. Como o Laravel tem a funcionalidade de migrations, que facilita a migração, e o uso de qualquer banco de dados relacional, seja ele MySQL ou PostegreSQL, resolvi não representar qual banco de dados a aplicação irá utilizar na imagem. Veja na Figura logo abaixo a arquitetura do container que será utilizado:
+</p>
 
 <p align="center">
     <img src="./img/laravel_docker_oportunidades.png" width="1000">
+</p>
+
+# Arquitetura de pastas do container.
+
+<p align="justify">
+O computador (Host), onde estará o container, precisará ter uma pasta, onde ficará todos os arquivos da aplicação do Laravel, esta pasta será compartilhada com o container, e o mesmo irá gerencia-lá. Isso facilita a atualização da aplicação que ter a necessidade de entrar dentro do container.
+</p>
+
+<p align="justify">
+Por padrão o <b>DocumentRoot</b> do apache aponta para a pasta <b>/app/public</b> do container, que é a para onde fica o arquivo <b>index.php</b>, que é onde é processado as requisições.
+</p>
+
+<p align="justify">
+Também é possível ver imagem abaixo a pasta onde fica todas as configurações do apache, caso você queira alterar algura configuração ou substituir um arquivo usando o espelhamento de pasta do docker-composer.yml, as pasta e configuração são o mais perto do padrão, como é possível ver na imagem, com a listagem de pastas do Apache.
+</p>
+
+<p align="center">
+    <img src="./img/arquitetura_do_container.png" width="500">
 </p>
