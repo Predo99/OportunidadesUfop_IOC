@@ -7,6 +7,11 @@ LABEL maintainer="Lucas Lima <lucas.developmaster@gmail.com>"
 # Selecionando usuario root
 USER root
 
+# Acentando o data e a hora do container
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN echo "date.timezone=$TZ" >> /usr/local/etc/php/conf.d/default.ini
+
 # previnindo problemas de update dos pacotes do sistema
 RUN rm -rf /var/lib/apt/lists/*
 RUN rm -rf /etc/apt/sources.list.d/*
@@ -45,9 +50,10 @@ RUN docker-php-ext-install mysqli
 # Instalando o composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
-# Lipando pacotes do sistema, nao e necessario de pois de os pacotes ja instalados
+# Lipando pacotes do sistema, deixando a imagem com um tamanho menor
 RUN rm -rf /var/lib/apt/lists/*
 RUN rm -rf /etc/apt/sources.list.d/*
+RUN rm -rf /tmp/*
 
 # Criar pasta do projeto alterar usuario padrao e permissao
 RUN mkdir /app

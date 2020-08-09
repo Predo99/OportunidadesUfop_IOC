@@ -1,7 +1,7 @@
 # Projeto de IOC (Insfraestrutura orientada a código)
 
 <p align="center">
-    <img src="laravel_docker.png" width="300">
+    <img src="./img/laravel_docker.png" width="300">
 </p>
 
 <p align=justify>
@@ -26,3 +26,11 @@ da mesma de forma automatizada.
 5. Para iniciar o projeto, é preciso ter uma rede chamada <strong>rede_docker</strong> pré-existente, caso não tenha, basta rodar o script <strong>script-create-rede-docker.sh</strong> no terminal.
 
 6. Depois de verificar, e ou seguir todos os passos acima, para roda o container, basta ir na pasta raiz do projeto do <strong>docker</strong> e iniciar o container da seguinte forma: <strong>docker-compose up -d</strong>.
+
+# Arquitetura do container.
+
+Foi utilizada a imagem oficial do PHP que é a [*php:7.2-apache*](https://hub.docker.com/_/php), como base, para criar a imagem do *laravel-oportunidades*. O container recebe conexões nas portas 80 e 443, sendo que na 443 ele recebe conexões via HTTPS. Como o Laravel tem a funcionalidade de migrations, que facilita a migração, e o uso de qualquer banco de dados relacional, seja ele MySQL ou PostegreSQL, resolvi não representar qual banco de dados a aplicação irá utilizar na imagem. Veja na Figura logo abaixo a arquitetura do container que será utilizado:
+
+<p align="center">
+    <img src="./img/laravel_docker_oportunidades.png" width="1000">
+</p>
