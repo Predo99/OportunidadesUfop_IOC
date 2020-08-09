@@ -13,7 +13,13 @@ da mesma de forma automatizada.
 # Como subir o container para rodar a aplicação do laravel ?
 
 ## Atenção:
+<p align="justify">
 O arquivo <b>docker-compose.yml</b> é o arquivo de configuração de produção, nele, nem vem por padrão a configuração de um banco de dados, só vem a configuração da aplicação PHP mesmo. Para realizar testes locais siga os passos abaixo, porém, em ver de rodar o arquivo <b>docker-compose.yml</b>, rode o arquivo <b>docker-compose-with-mysql.yml</b>, que já vem inclusive com as configurações de banco de dados para facilitar os testes.
+</p>
+
+<p align="justify">
+É preciso lembrar que na configuração do arquivo <b>docker-compose-with-mysql.yml</b> o banco de dados do MySQL por padrão aponta para escutar conexões na porta 3306, se você já tive uma instalação do MySQL instalado em sua máquina, sugiro desinstala-lo, ou desabilita-lo.
+</p>
 
 ## Configurações principais
 
