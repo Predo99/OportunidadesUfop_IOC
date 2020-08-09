@@ -1,7 +1,8 @@
 # Projeto de IOC (Insfraestrutura orientada a código)
 
-![Laravel e Docker](laravel_docker.png)
-
+<p align="center">
+    <img src="laravel_docker.png" width="300">
+</p>
 
 <p align=justify>
 Neste repositorio contém todas as configurações necessárias, para criar
@@ -22,6 +23,6 @@ da mesma de forma automatizada.
 
 4. Certifique-se de ter o <strong>docker</strong>, e o <strong>docker-compose</strong> instalados em sua máquina.
 
-5. Para iniciar o projeto, é preciso ter uma rede chamada <strong>rede_docker</strong> pré-existente, caso não tenha, crie da seguinte forma: <strong>docker network create --subnet 172.20.0.0/16 --gateway 172.20.0.1 rede_docker</strong>.
+5. Para iniciar o projeto, é preciso ter uma rede chamada <strong>rede_docker</strong> pré-existente, caso não tenha, basta rodar o script <strong>script-create-rede-docker.sh</strong> no terminal.
 
 6. Depois de verificar, e ou seguir todos os passos acima, para roda o container, basta ir na pasta raiz do projeto do <strong>docker</strong> e iniciar o container da seguinte forma: <strong>docker-compose up -d</strong>.
