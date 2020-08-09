@@ -39,7 +39,7 @@ O arquivo <b>docker-compose.yml</b> é o arquivo de configuração de produção
 # Arquitetura do container.
 
 <p align="justify">
-Foi utilizada a imagem oficial do PHP que é a [*php:7.2-apache*](https://hub.docker.com/_/php), como base, para criar a imagem do *laravel-oportunidades*. O container recebe conexões nas portas 80 e 443, sendo que na 443 ele recebe conexões via HTTPS. Como o Laravel tem a funcionalidade de migrations, que facilita a migração, e o uso de qualquer banco de dados relacional, seja ele MySQL ou PostegreSQL, resolvi não representar qual banco de dados a aplicação irá utilizar na imagem. Veja na Figura logo abaixo a arquitetura do container que será utilizado:
+Foi utilizada a imagem oficial do PHP que é a php:7.2-apache(https://hub.docker.com/_/php), como base, para criar a imagem do *laravel-oportunidades*. O container recebe conexões nas portas 80 e 443, sendo que na 443 ele recebe conexões via HTTPS. Como o Laravel tem a funcionalidade de migrations, que facilita a migração, e o uso de qualquer banco de dados relacional, seja ele MySQL ou PostegreSQL, resolvi não representar qual banco de dados a aplicação irá utilizar na imagem. Veja na Figura logo abaixo a arquitetura do container que será utilizado:
 </p>
 
 <p align="center">
