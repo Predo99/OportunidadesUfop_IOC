@@ -4,22 +4,28 @@ FROM php:7.2-apache
 # Repository/Image Maintainer
 LABEL maintainer="Lucas Lima <lucas.developmaster@gmail.com>"
 
+# Selecionando usuario root
 USER root
+
+# previnindo problemas de update dos pacotes do sistema
 RUN rm -rf /var/lib/apt/lists/*
 RUN rm -rf /etc/apt/sources.list.d/*
 
-#Installing SSL
+# Atualando pacotes do sistema
 RUN apt-get update -y
 
 # Extensao que auxilia o composer 
 RUN apt-get install unzip -y
 
-# Instalando e abilitando o SSL/TLS
+# Instalando, abilitando e configurando o SSL/TLS
 RUN apt-get install openssl -y
-RUN a2enmod ssl && a2ensite default-ssl && a2enmod rewrite
+RUN a2enmod ssl
+RUN a2ensite default-ssl
+RUN a2enmod rewrite
 
 # Copying certificate files SSL
 COPY ./apache2/default-ssl.conf /etc/apache2/sites-enabled
+COPY ./apache2/000-default.conf /etc/apache2/sites-enabled
 COPY ./apache2/apache2.conf /etc/apache2/
 
 # Criar pastas para salvas arquivo SSL/TLS
@@ -39,18 +45,17 @@ RUN docker-php-ext-install mysqli
 # Instalando o composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
-# Criar pastas do projeto e criando link simbolico
+# Lipando pacotes do sistema, nao e necessario de pois de os pacotes ja instalados
+RUN rm -rf /var/lib/apt/lists/*
+RUN rm -rf /etc/apt/sources.list.d/*
+
+# Criar pasta do projeto alterar usuario padrao e permissao
 RUN mkdir /app
-
-# Application directory
-WORKDIR "/app"
-
-# Link simbolido da  pasta pulic do laravel para pasta html do apache
-COPY ./project/ /app/
-RUN ln -s /app/public/* /var/www/html/
-
-# Dando permissao total na pasta APP para evitar problemas de permissao
 RUN chmod 777 -R /app
+RUN chown -R www-data:www-data /app
+
+# Pasta principal de trabalho
+WORKDIR "/app"
 
 # Gerando o Entrypoint para configurar o projeto
 COPY ./laravel-entrypoint.sh /

@@ -7,17 +7,17 @@ services:
     image: laravel-oportunidades:latest
     container_name: oportunidades
     volumes:
-      - ./project:/app
-      # - /etc/pki/tls/certs:/etc/apache2/certs
-      # - /etc/pki/tls/private:/etc/apache2/private
+      - /home/oportuni/public_html:/app
+      - /etc/pki/tls/certs:/etc/apache2/certs
+      - /etc/pki/tls/private:/etc/apache2/private
     ports:
       - "8084:80"
       - "8085:443"
     restart: always
     networks: 
       default:
-        ipv4_address: 172.19.0.5
+        ipv4_address: 172.20.0.5
 networks:
   default:
     external:
-      name: laravel
+      name: rede_docker
