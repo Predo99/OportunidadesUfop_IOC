@@ -3,7 +3,7 @@ version: '2'
 services:
   oportunidades:
     tty: true
-    build: ./src/laravel
+    build: ./src
     image: laravel-oportunidades:latest
     container_name: oportunidades
     volumes:
