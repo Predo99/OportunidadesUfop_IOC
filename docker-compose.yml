@@ -17,6 +17,23 @@ services:
     networks: 
       default:
         ipv4_address: 172.20.0.5
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:12.3
+    restart: always
+    container_name: postgres
+    ports: 
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=homestead
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+    networks: 
+      default:
+        ipv4_address: 172.20.0.4
 networks:
   default:
     external:

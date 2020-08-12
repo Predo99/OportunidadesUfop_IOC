@@ -17,6 +17,7 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN rm -rf /etc/apt/sources.list.d/*
 
 # Atualando pacotes do sistema
+RUN dpkg --configure -a
 RUN apt-get update -y
 
 # Extensao que auxilia o composer 
@@ -46,6 +47,11 @@ RUN docker-php-ext-install pdo
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install tokenizer
 RUN docker-php-ext-install mysqli
+
+# Install Postgre PDO
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Instalando o composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
