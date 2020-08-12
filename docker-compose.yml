@@ -3,8 +3,8 @@ version: '2'
 services:
   oportunidades:
     tty: true
-    build: .
-    image: laravel-oportunidades:latest
+    # build: .
+    image: lucaslz/laravel-oportunidades
     container_name: oportunidades
     volumes:
       - /home/oportuni/public_html:/app
