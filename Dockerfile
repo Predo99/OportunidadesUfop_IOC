@@ -9,25 +9,24 @@ USER root
 
 # Acentando o data e a hora do container
 ENV TZ=America/Sao_Paulo
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN echo "date.timezone=$TZ" >> /usr/local/etc/php/conf.d/default.ini
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone && \
+    echo "date.timezone=$TZ" >> /usr/local/etc/php/conf.d/default.ini
 
 # previnindo problemas de update dos pacotes do sistema
-RUN rm -rf /var/lib/apt/lists/*
-RUN rm -rf /etc/apt/sources.list.d/*
+RUN rm -rf /var/lib/apt/lists/* && \
+    rm -rf /etc/apt/sources.list.d/*
 
 # Atualando pacotes do sistema
-RUN dpkg --configure -a
-RUN apt-get update -y
-
-# Extensao que auxilia o composer 
-RUN apt-get install unzip -y
+RUN dpkg --configure -a && \
+    apt-get update -y && \
+    apt-get install zlib1g-dev -y && \
+    apt-get install libpng-dev -y
 
 # Instalando, abilitando e configurando o SSL/TLS
-RUN apt-get install openssl -y
-RUN a2enmod ssl
-RUN a2ensite default-ssl
-RUN a2enmod rewrite
+RUN apt-get install openssl -y && \
+    a2enmod ssl && \
+    a2ensite default-ssl && \
+    a2enmod rewrite
 
 # Copying certificate files SSL
 COPY ./apache2/default-ssl.conf /etc/apache2/sites-enabled
@@ -47,24 +46,26 @@ RUN docker-php-ext-install pdo
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install tokenizer
 RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install gd
 
 # Install Postgre PDO
-RUN apt-get install -y libpq-dev \
-    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install pdo pdo_pgsql pgsql
+RUN apt-get install -y libpq-dev && \
+    apt-get install unzip -y && \
+    docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && \
+    docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Instalando o composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
 
 # Lipando pacotes do sistema, deixando a imagem com um tamanho menor
-RUN rm -rf /var/lib/apt/lists/*
-RUN rm -rf /etc/apt/sources.list.d/*
-RUN rm -rf /tmp/*
+RUN rm -rf /var/lib/apt/lists/* && \
+    rm -rf /etc/apt/sources.list.d/* && \
+    rm -rf /tmp/*
 
 # Criar pasta do projeto alterar usuario padrao e permissao
-RUN mkdir /app
-RUN chmod 777 -R /app
-RUN chown -R www-data:www-data /app
+RUN mkdir /app && \
+    chmod 777 -R /app && \
+    chown -R www-data:www-data /app
 
 # Pasta principal de trabalho
 WORKDIR "/app"

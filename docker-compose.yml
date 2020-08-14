@@ -3,7 +3,7 @@ version: '2'
 services:
   oportunidades:
     tty: true
-    # build: .
+    build: .
     image: lucaslz/laravel-oportunidades
     container_name: oportunidades
     volumes:
